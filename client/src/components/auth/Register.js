@@ -5,13 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { alertAdded } from '../../reducers/alert';
 import { connect } from 'react-redux';
 
-export const Register = (props) => {
+export const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
   });
+
+  //const { alert } = useSelector((state) => state.alertAdded);
+  const dispatch = useDispatch();
 
   const { name, email, password, password2 } = formData;
   const onChange = (e) =>
@@ -20,7 +23,7 @@ export const Register = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      props.alertAdded({ msg: 'Passwords do not match', type: 'danger' });
+      dispatch(alertAdded({ msg: 'Passwords do not match', type: 'danger' }));
     } else {
       console.log('success');
     }
@@ -86,4 +89,4 @@ export const Register = (props) => {
   );
 };
 
-export default connect(null, { alertAdded })(Register);
+export default Register;

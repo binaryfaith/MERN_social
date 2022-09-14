@@ -15,6 +15,9 @@ const alertSlice = createSlice({
         return { payload: { id, msg, type } };
       },
     },
+    alertToggled: (state, action) => {
+      state.filter((alert) => alert.id !== action.payload);
+    },
   },
 });
 
