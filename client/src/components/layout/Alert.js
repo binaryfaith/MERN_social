@@ -5,6 +5,7 @@ import { alertToggled } from '../../reducers/alert';
 export default function Alert() {
   const alerts = useSelector((state) => state.alert);
   const dispatch = useDispatch();
+
   console.log(alerts);
 
   const alertMessage =
@@ -12,20 +13,17 @@ export default function Alert() {
     alerts.length > 0 &&
     alerts.map((alert) => (
       <div className='alert-wrapper'>
-        <div key={alert.id} className={`alert alert-${alert.type}`}>
+        <div className={`alert alert-${alert.type}`}>
           {alert.msg}
+          <span
+            onClick={() => dispatch(alertToggled({ id: alert.id }))}
+            className='closebtn'
+          >
+            x
+          </span>
         </div>
       </div>
     ));
-
-  setTimeout(
-    () =>
-      alerts.map((alert) => {
-        console.log(alert.id);
-        dispatch(alertToggled({ id: alert.id }));
-      }),
-    500
-  );
 
   return alertMessage;
 }

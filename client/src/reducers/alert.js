@@ -8,15 +8,19 @@ const alertSlice = createSlice({
     alertAdded: {
       reducer: (state, action) => {
         state.push(action.payload);
+        console.log(state);
       },
       prepare: (text) => {
         const id = uuidv4();
         const { msg, type } = text;
+
         return { payload: { id, msg, type } };
       },
     },
     alertToggled: (state, action) => {
-      state.filter((alert) => alert.id !== action.payload);
+      console.log(action.payload);
+      console.log(action.payload.id);
+      return state.filter((alert) => alert.id !== action.payload.id);
     },
   },
 });
