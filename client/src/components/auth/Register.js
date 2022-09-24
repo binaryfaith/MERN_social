@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { alertAdded } from '../../reducers/alert';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
+import { useRegisterUserMutation } from '../../services/registerApi';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,17 +17,23 @@ export const Register = () => {
 
   //const { alert } = useSelector((state) => state.alertAdded);
   const dispatch = useDispatch();
+  //const getRegistry = useRegisterQuery();
 
   const { name, email, password, password2 } = formData;
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const [registerUser] = useRegisterUserMutation();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
       dispatch(alertAdded({ msg: 'Passwords do not match', type: 'danger' }));
     } else {
-      console.log('success');
+      console.log(name, email, password);
+      const data = { name, email, password };
+      await registerUser(data);
     }
   };
 
